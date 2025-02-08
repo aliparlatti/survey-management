@@ -1,4 +1,11 @@
 <h2 class="fw-bold fs-3 text-primary">Surveys</h2>
+<div class="d-flex flex-row justify-content-end m-2" *ngIf="_authService.user?.value?.role===Role.Admin">
+  <a [routerLink]="['./create']">
+    <button class="rounded-circle btn btn-sm btn-success">
+      <i class="bi bi-plus-lg fs-5"></i>
+    </button>
+  </a>
+</div>
 <div class="table-responsive-lg px-3">
   <table class="table table-striped">
     <thead>
@@ -19,8 +26,15 @@
           <td>{{ survey.questions?.length || 0 }}</td>
           <td>
             <div class="d-flex flex-row gap-3" *ngIf="_authService.user?.value?.role===Role.Admin; else user">
-              <i class="bi text-primary fs-4 bi-pencil-square"></i>
-              <i class="bi text-danger fs-4 bi-trash"></i>
+              <button class="btn btn-sm btn-warning d-flex flex-row gap-2 align-items-center"
+                      [routerLink]="['update',survey.id]">
+                <i class="bi bi-pencil-square">
+                </i>Update
+              </button>
+              <button class="btn btn-sm btn-danger d-flex flex-row gap-2 align-items-center"
+                      (click)="removeSurvey(survey)">
+                <i class="bi bi-trash"></i>Delete
+              </button>
             </div>
             <ng-template #user>
               <button class="btn btn-success btn-sm d-flex flex-row gap-2">

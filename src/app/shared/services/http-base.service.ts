@@ -17,13 +17,13 @@ export abstract class HttpBaseService<T> {
     return this.http.post<T>(this.modelBaseUrl + (urlSuffix ? urlSuffix : ''), body);
   }
 
-  patch<T>(id: string, body: Partial<T>, urlSuffix?: string): Observable<T> {
-    const url = this.modelBaseUrl + (urlSuffix ? urlSuffix : '') + (id ? id : '');
+  patch<T>(id: number, body: Partial<T>, urlSuffix?: string): Observable<T> {
+    const url = this.modelBaseUrl + (urlSuffix ? urlSuffix : '') + (id ? `/${id}`: '');
     return this.http.patch<T>(url, body);
   }
 
-  delete<T>(id: string, urlSuffix?: string): Observable<T> {
-    const url = this.modelBaseUrl + (urlSuffix ? urlSuffix : '') + (id ? id : '');
+  delete<T>(id: number, urlSuffix?: string): Observable<T> {
+    const url = this.modelBaseUrl + (urlSuffix ? urlSuffix : '') + (id ? `/${id}`: '');
     return this.http.delete<T>(url);
   }
 }
