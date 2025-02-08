@@ -1,11 +1,14 @@
-import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import {HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest} from '@angular/common/http';
+import {inject} from '@angular/core';
+import {catchError, Observable, throwError} from 'rxjs';
 import {AuthService} from "./auth.service";
 import {AuthUtils} from "./auth.utils";
+import {ToastService} from '../../shared/services/toast.service';
 
 export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
   const authService = inject(AuthService);
+  const toastService = inject(ToastService);
+
   let newReq = req.clone();
 
 
@@ -24,7 +27,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
             location.reload();
             break;
           case 500:
-            alert(error.error || error.message);
+            toastService.show(error.message, {classname: 'bg-danger text-light', delay: 4000});
             break;
           default:
             break;
