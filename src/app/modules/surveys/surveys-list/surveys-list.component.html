@@ -1,4 +1,5 @@
-<div class="table-responsive-lg">
+<h2 class="fw-bold fs-3 text-primary">Surveys</h2>
+<div class="table-responsive-lg px-3">
   <table class="table table-striped">
     <thead>
     <tr>
@@ -17,10 +18,15 @@
           </td>
           <td>{{ survey.questions?.length || 0 }}</td>
           <td>
-           <div class="d-flex flex-row gap-3">
-             <i class="bi text-primary fs-4 bi-pencil-square"></i>
-             <i class="bi text-danger fs-4 bi-trash"></i>
-           </div>
+            <div class="d-flex flex-row gap-3" *ngIf="_authService.user?.value?.role===Role.Admin; else user">
+              <i class="bi text-primary fs-4 bi-pencil-square"></i>
+              <i class="bi text-danger fs-4 bi-trash"></i>
+            </div>
+            <ng-template #user>
+              <button class="btn btn-success btn-sm d-flex flex-row gap-2">
+                <i class="bi bi-vector-pen"></i>
+                <span>Answer</span></button>
+            </ng-template>
           </td>
         </tr>
       }

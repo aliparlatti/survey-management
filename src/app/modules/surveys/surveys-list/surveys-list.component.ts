@@ -3,12 +3,16 @@ import {NgbPagination} from '@ng-bootstrap/ng-bootstrap';
 import {SurveysService} from '../services/surveys.service';
 import {ISurvey} from '../models/surveys.interface';
 import {BehaviorSubject, Subject, takeUntil} from 'rxjs';
-import {IPageableInterface} from '../models/pageable.interface';
+import {IPageableInterface} from '../../../shared/models/pageable.interface';
+import {AuthService} from '../../../core/auth/auth.service';
+import {Role} from '../../../shared/models/user.interface';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-surveys-list',
   imports: [
-    NgbPagination
+    NgbPagination,
+    NgIf
   ],
   templateUrl: './surveys-list.component.html',
 })
@@ -17,7 +21,9 @@ export class SurveysListComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any> = new Subject<any>();
   surveys$: BehaviorSubject<ISurvey[]> = new BehaviorSubject<ISurvey[]>([]);
   pageable:IPageableInterface={_page:1,_limit:10}
-  constructor(private _surveysService: SurveysService) {
+  protected readonly Role = Role;
+
+  constructor(private _surveysService: SurveysService,protected _authService: AuthService) {
   }
 
   ngOnInit() {

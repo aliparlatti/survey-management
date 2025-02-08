@@ -11,6 +11,10 @@ export const routes: Routes = [
         loadChildren: () => import('../../modules/surveys/surveys.routes'),
       },
       {
+        path: 'answers',
+        loadChildren: () => import('../../modules/answers/answers.routes'),
+      },
+      {
         path: '',
         redirectTo: 'surveys',
         pathMatch: 'full',
