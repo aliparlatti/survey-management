@@ -1,14 +1,15 @@
 import {Routes} from '@angular/router';
-import {LayoutComponent} from './layout.component';
+import {SurveysComponent} from './surveys.component';
+import {SurveysListComponent} from './surveys-list/surveys-list.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: LayoutComponent,
+    component: SurveysComponent,
     children: [
       {
-        path: 'surveys',
-        loadChildren: () => import('../../modules/surveys/surveys.routes'),
+        path: '',
+        component: SurveysListComponent,
       },
       {
         path: '',

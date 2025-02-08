@@ -9,11 +9,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./core/layout/layout.routes'),
   },
-  {path: '', pathMatch: 'full', redirectTo: 'home'},
+  {path: '', pathMatch: 'full', redirectTo: 'surveys'},
   {
     path: 'signed-in-redirect',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'surveys',
   },
   {
     path: '',

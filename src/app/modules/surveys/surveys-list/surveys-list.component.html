@@ -1,0 +1,39 @@
+<div class="table-responsive-lg">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col" class="text-nowrap">#</th>
+      <th scope="col" class="text-nowrap">Title</th>
+      <th scope="col" class="text-nowrap">Number of Questions</th>
+      <th scope="col" class="text-nowrap">Process</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (survey of surveys$.value; let i = $index; track survey.id) {
+        <tr>
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ survey.title }}
+          </td>
+          <td>{{ survey.questions?.length || 0 }}</td>
+          <td>
+           <div class="d-flex flex-row gap-3">
+             <i class="bi text-primary fs-4 bi-pencil-square"></i>
+             <i class="bi text-danger fs-4 bi-trash"></i>
+           </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [collectionSize]="40"
+      [(page)]="pageable._page"
+      [pageSize]="pageable._limit"
+      (pageChange)="loadData()"
+    >
+      <!-- [collectionSize]="40" TotalSize value should come from BE-->
+    </ngb-pagination>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {NgClass} from '@angular/common';
 import {AuthService} from '../../auth.service';
 import {Subject, takeUntil} from 'rxjs';
 import {Router} from '@angular/router';
@@ -8,7 +7,6 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-sign-in',
   imports: [
-    NgClass,
     ReactiveFormsModule
   ],
   templateUrl: './sign-in.component.html',
@@ -35,7 +33,7 @@ export class SignInComponent implements OnDestroy {
         .subscribe({
           next: (value) => {
             if (value) {
-              this.router.navigate(['home']);
+              this.router.navigate(['surveys']);
             }
           },
         });
