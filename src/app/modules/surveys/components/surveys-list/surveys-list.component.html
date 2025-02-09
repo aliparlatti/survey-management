@@ -1,0 +1,69 @@
+<div class="container">
+  <h2 class="fw-bold fs-3 text-primary">Surveys</h2>
+  <div class="d-flex flex-row justify-content-end m-2" *ngIf="_authService.user?.value?.role===Role.Admin">
+    <a [routerLink]="['./create']">
+      <button class="rounded-circle btn btn-sm btn-success">
+        <i class="bi bi-plus-lg fs-5"></i>
+      </button>
+    </a>
+  </div>
+  <div class="table-responsive-lg px-3">
+    <table class="table table-striped"
+           *ngIf="surveys$.value.length > 0; else noDataTemplate">
+      <thead>
+      <tr>
+        <th scope="col" class="text-nowrap">#</th>
+        <th scope="col" class="text-nowrap">Title</th>
+        <th scope="col" class="text-nowrap">Number of Questions</th>
+        <th scope="col" class="text-nowrap">Process</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (survey of surveys$.value; let i = $index; track survey.id) {
+          <tr>
+            <th scope="row">{{ i + 1 }}</th>
+            <td class="text-nowrap">
+              {{ survey.title }}
+            </td>
+            <td>{{ survey.questions?.length || 0 }}</td>
+            <td>
+              <div class="d-flex flex-row gap-3" *ngIf="_authService.user?.value?.role===Role.Admin; else user">
+                <button class="btn btn-sm btn-warning d-flex flex-row gap-2 align-items-center"
+                        [routerLink]="['update',survey.id]">
+                  <i class="bi bi-pencil-square">
+                  </i>Update
+                </button>
+                <button class="btn btn-sm btn-danger d-flex flex-row gap-2 align-items-center"
+                        (click)="removeSurvey(survey)">
+                  <i class="bi bi-trash"></i>Delete
+                </button>
+              </div>
+              <ng-template #user>
+                <button class="btn btn-success btn-sm d-flex flex-row gap-2"
+                        [routerLink]="['detail',survey.id]">
+                  <i class="bi bi-vector-pen"></i>
+                  <span>Answer</span></button>
+              </ng-template>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination
+        [collectionSize]="40"
+        [(page)]="pageable._page"
+        [pageSize]="pageable._limit"
+        (pageChange)="loadData()"
+      >
+        <!-- [collectionSize]="40" TotalSize value should come from BE-->
+      </ngb-pagination>
+    </div>
+    <ng-template #noDataTemplate>
+      <div class="d-flex flex-column justify-content-center align-items-center vh-50">
+        <i class="bi bi-clipboard-x text-secondary fs-1"></i>
+        <p class="fs-5 text-muted">No data available</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

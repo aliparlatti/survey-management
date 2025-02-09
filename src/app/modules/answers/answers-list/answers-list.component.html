@@ -1,0 +1,53 @@
+<div class="container">
+  <h2 class="fw-bold fs-3 text-primary mb-3">Answers</h2>
+  <div *ngIf="answers$.value.length > 0; else noDataTemplate" class="row g-3">
+    @for (answer of answers$.value; let i = $index; track answer.id) {
+      <div class="col-12">
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="mb-1 text-primary">{{ answer?.survey?.title }}</h5>
+                <p class="mb-0 text-muted">Submitted by: <strong>{{ answer?.user?.name }}</strong></p>
+              </div>
+              <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#collapse'+i"
+                      aria-expanded="false" [attr.aria-controls]="'collapse'+i">
+                <i class="bi bi-chevron-expand"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="collapse" [id]="'collapse'+i">
+            <div class="card-body bg-light">
+              <h6 class="fw-bold">Answers:</h6>
+              <div class="d-flex flex-column gap-2">
+                @for (question of answer.questions; let j = $index; track j) {
+                  <p class="mb-1"><strong>{{ j+1 }}. Question:</strong> {{ question.answer }}</p>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="d-flex justify-content-between p-3">
+    <ngb-pagination
+      [collectionSize]="40"
+      [(page)]="pageable._page"
+      [pageSize]="pageable._limit"
+      (pageChange)="loadData()"
+    >      <!-- [collectionSize]="40" TotalSize value should come from BE-->
+    </ngb-pagination>
+  </div>
+
+  <ng-template #noDataTemplate>
+    <div class="d-flex flex-column justify-content-center align-items-center vh-50">
+      <i class="bi bi-clipboard-x text-secondary fs-1"></i>
+      <p class="fs-5 text-muted">No data available</p>
+    </div>
+  </ng-template>
+
+</div>

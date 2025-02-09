@@ -1,0 +1,41 @@
+<div class="container" *ngIf="survey">
+  <h2 class="fw-bold fs-3 text-primary mb-3">{{ survey.title }}</h2>
+  <form [formGroup]="answerForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="questions">
+      <div *ngFor="let questionCtrl of questionsFormArray.controls; let i = index" [formGroupName]="i" class="mb-3">
+        <label class="form-label fw-bold">
+          {{ survey.questions?.[i]?.text }}
+        </label>
+        <div [ngSwitch]="survey.questions?.[i]?.type">
+          <input *ngSwitchCase="'text'" type="text" class="form-control" formControlName="answer"
+                 placeholder="Enter your answer"/>
+          <div *ngSwitchCase="'select'" class="d-flex overflow-y-auto">
+            @for (option of survey.questions?.[i]?.options; let j = $index; track j) {
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  [name]="i" [id]="j+'-'+option.text"
+                  (change)="questionsFormArray.at(i).patchValue({ answer:option.text })"
+                  [value]="option.text">
+                <label class="form-check-label text-nowrap pb-3" [for]="j+'-'+option.text">
+                  {{ option.text }}
+                </label>
+              </div>
+            }
+          </div>
+        </div>
+        <div
+          *ngIf="questionCtrl.get('answer')?.invalid && (questionCtrl.get('answer')?.touched || questionCtrl.get('answer')?.dirty)"
+          class="text-danger mt-1">
+          <small>Answer is required.</small>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-row justify-content-end">
+      <button type="submit" class="btn btn-success"
+      >Submit Answer
+      </button>
+    </div>
+  </form>
+</div>

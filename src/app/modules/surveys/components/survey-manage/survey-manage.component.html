@@ -1,0 +1,82 @@
+<div class="container">
+  <h2 class="fw-bold fs-3 text-primary mb-3">{{ survey?.id ? 'Update ' : 'Create ' }}Survey</h2>
+  <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="surveyTitle" class="form-label">Survey Title</label>
+      <input
+        type="text"
+        id="surveyTitle"
+        class="form-control"
+        formControlName="title"
+        placeholder="Enter survey title"
+      />
+      <div
+        *ngIf="surveyForm.get('title')?.invalid && (surveyForm.get('title')?.touched || surveyForm.get('title')?.dirty)"
+        class="text-danger">
+        <small *ngIf="surveyForm.get('title')?.errors?.['required']">Title is required.</small>
+        <small *ngIf="surveyForm.get('title')?.errors?.['minlength']">Title must be at least 2 characters.</small>
+        <small *ngIf="surveyForm.get('title')?.errors?.['maxlength']">Title must be at most 250 characters.</small>
+      </div>
+    </div>
+
+    <div formArrayName="questions">
+      <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Question {{ i + 1 }}</span>
+          <button type="button" class="btn btn-danger btn-sm" (click)="removeQuestion(i)">Remove</button>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Question Text</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="text"
+              placeholder="Enter question text"
+            />
+            <div *ngIf="question.get('text')?.invalid && (question.get('text')?.touched || question.get('text')?.dirty)"
+                 class="text-danger">
+              <small *ngIf="question.get('text')?.errors?.['required']">Question text is required.</small>
+              <small *ngIf="question.get('text')?.errors?.['minlength']">Minimum 2 characters.</small>
+              <small *ngIf="question.get('text')?.errors?.['maxlength']">Maximum 300 characters.</small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Question Type</label>
+            <select class="form-select" formControlName="type">
+              <option value="text">Text</option>
+              <option value="select">Select</option>
+            </select>
+          </div>
+
+          <div *ngIf="question.get('type')?.value === 'select'" formArrayName="options">
+            <div *ngFor="let option of getOptions(i).controls; let j = index" [formGroupName]="j"
+                 class="input-group mb-2">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="text"
+                placeholder="Option text"
+              />
+              <button type="button" class="btn btn-danger" (click)="removeOption(i, j)">Remove</button>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="addOption(i)">Add Option</button>
+            <div *ngIf="question.errors?.insufficientOptions && (question.touched || question.dirty)"
+                 class="text-danger">
+              <small>At least 2 options are required for select type questions.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row justify-content-between">
+      <button type="button" class="btn btn-primary" (click)="addQuestion()">Add Question</button>
+      <button type="submit" class="btn btn-success"
+              [class.btn-success]="!survey?.id"
+              [class.btn-warning]="survey?.id">{{ survey?.id ? 'Update ' : 'Create ' }} Survey
+      </button>
+    </div>
+  </form>
+</div>
