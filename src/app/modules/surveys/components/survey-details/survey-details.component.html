@@ -1,4 +1,4 @@
-<div class="container-fluid my-5" *ngIf="survey">
+<div class="container" *ngIf="survey">
   <h2 class="fw-bold fs-3 text-primary mb-3">{{ survey.title }}</h2>
   <form [formGroup]="answerForm" (ngSubmit)="onSubmit()">
     <div formArrayName="questions">

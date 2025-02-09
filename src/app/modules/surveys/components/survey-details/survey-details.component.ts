@@ -65,7 +65,7 @@ export class SurveyDetailsComponent implements OnInit, OnDestroy {
       this._answerService.post<IAnswer>(this.answerForm.value)
         .pipe(takeUntil(this._unsubscribeAll)).subscribe(
         (value: IAnswer) => {
-          this.toastService.show('Answered', {classname: 'bg-success text-light', delay: 4000});
+          this.toastService.show('Answered: '+ this.survey.title, {classname: 'bg-success text-light', delay: 4000});
           this.answerForm = AnswerForm.createForm(this.fb, this.survey, this._authService.user.value?.id);
         },
         error => {
