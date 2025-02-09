@@ -4,11 +4,13 @@ import {BehaviorSubject, Subject, takeUntil} from 'rxjs';
 import {IPageableInterface} from '../../../shared/models/pageable.interface';
 import {IAnswer} from '../models/answer.model';
 import {AnswersService} from '../services/answers.service';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-answers-list',
   imports: [
-    NgbPagination
+    NgbPagination,
+    NgIf
   ],
   templateUrl: './answers-list.component.html',
 })
