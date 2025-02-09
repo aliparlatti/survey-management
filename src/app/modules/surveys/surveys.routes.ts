@@ -5,6 +5,7 @@ import {RoleGuard} from '../../core/auth/guards/role.guard';
 import {Role} from '../../shared/models/user.interface';
 import {SurveyCreateComponent} from './components/survey-create/survey-create.component';
 import {SurveyUpdateComponent} from './components/survey-update/survey-update.component';
+import {SurveyDetailsComponent} from './components/survey-details/survey-details.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,12 @@ export const routes: Routes = [
         component: SurveyUpdateComponent,
         canActivate: [RoleGuard],
         data: {role: Role.Admin},
+      },
+      {
+        path: 'detail/:id',
+        component: SurveyDetailsComponent,
+        canActivate: [RoleGuard],
+        data: {role: Role.User},
       },
       {
         path: '',

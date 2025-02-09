@@ -28,8 +28,8 @@
         <tr class="collapse" [id]="'collapse'+i">
           <td colspan="4" class="bg-body-tertiary p-3 ">
             <div class="d-flex flex-column gap-2">
-              @for (question of answer.questions; track question.id) {
-                <span><strong>{{ question.id }}. Question: </strong> {{ question.answer }}</span>
+              @for (question of answer.questions;let j = $index; track j) {
+                <span><strong>{{ j+1 }}. Question: </strong> {{ question.answer }}</span>
               }
             </div>
           </td>

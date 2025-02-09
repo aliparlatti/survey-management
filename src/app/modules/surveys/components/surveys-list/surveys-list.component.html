@@ -37,7 +37,8 @@
               </button>
             </div>
             <ng-template #user>
-              <button class="btn btn-success btn-sm d-flex flex-row gap-2">
+              <button class="btn btn-success btn-sm d-flex flex-row gap-2"
+                      [routerLink]="['detail',survey.id]">
                 <i class="bi bi-vector-pen"></i>
                 <span>Answer</span></button>
             </ng-template>

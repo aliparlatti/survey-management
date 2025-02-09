@@ -20,7 +20,7 @@ import {ToastService} from '../../../../shared/services/toast.service';
 export class SurveyManageComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any> = new Subject<any>();
   surveyForm: FormGroup;
-  @Input({required: false}) survey: ISurvey;
+  @Input({required: false}) survey: ISurvey|null;
 
   constructor(private fb: FormBuilder, private _surveysService: SurveysService, private toastService: ToastService,) {
   }

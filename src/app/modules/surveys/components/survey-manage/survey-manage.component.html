@@ -75,8 +75,7 @@
       <button type="button" class="btn btn-primary" (click)="addQuestion()">Add Question</button>
       <button type="submit" class="btn btn-success"
               [class.btn-success]="!survey?.id"
-              [class.btn-warning]="survey?.id"
-              [class.disabled]="surveyForm.invalid">{{ survey?.id ? 'Update ' : 'Create ' }} Survey
+              [class.btn-warning]="survey?.id">{{ survey?.id ? 'Update ' : 'Create ' }} Survey
       </button>
     </div>
   </form>
