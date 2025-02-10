@@ -53,13 +53,20 @@
           <div *ngIf="question.get('type')?.value === 'select'" formArrayName="options">
             <div *ngFor="let option of getOptions(i).controls; let j = index" [formGroupName]="j"
                  class="input-group mb-2">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="text"
-                placeholder="Option text"
-              />
-              <button type="button" class="btn btn-danger" (click)="removeOption(i, j)">Remove</button>
+              <div class="d-flex flex-row w-100">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="text"
+                  placeholder="Option text"
+                />
+                <button type="button" class="btn btn-danger" (click)="removeOption(i, j)">Remove</button>
+              </div>
+              <div *ngIf="option.get('text')?.invalid && (option.get('text')?.touched || option.get('text')?.dirty)" class="text-danger">
+                <small *ngIf="option.get('text')?.errors?.['required']">Option text is required.</small>
+                <small *ngIf="option.get('text')?.errors?.['minlength']">Minimum 2 characters.</small>
+                <small *ngIf="option.get('text')?.errors?.['maxlength']">Maximum 50 characters.</small>
+              </div>
             </div>
             <button type="button" class="btn btn-secondary btn-sm" (click)="addOption(i)">Add Option</button>
             <div *ngIf="question.errors?.insufficientOptions && (question.touched || question.dirty)"
